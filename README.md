@@ -24,7 +24,11 @@ pytest                                       # offline tests, no network
 streamlit run app.py
 ```
 
-This opens a browser page where a marketing ops user can upload a CSV (or tick "Use the bundled sample_leads.csv") and click **Run pipeline**. The page shows:
+This opens a browser page. In the sidebar, a marketing ops user makes two choices and clicks **Run pipeline**:
+1. **Leads to run:** "Sample leads (15 rows)" or "Upload my own CSV". The upload box only appears for the second option, and Run stays disabled until a file is chosen.
+2. **Previous results:** "Clear previous results first" (default) rebuilds the outputs from scratch. Untick it to add to the last run, where existing values are never overwritten and only blank fields are filled.
+
+Before a run, the main area shows the workflow design diagram (`assets/workflow_design.png`, a snapshot of the [Whimsical board](https://whimsical.com/KuLbj7DSxCxpkCUAUsVYMk)), so users can see every step. After a run, the page has a **Results** tab and a **Workflow design** tab. Results shows:
 - counts per lane
 - a filterable leads table (lane, reason_code, total_score, validation_status), with HELD, HUMAN_REVIEW, enrichment-conflict and template_fallback rows highlighted
 - expandable touch-1 drafts for OUTBOUND and MSP_TRACK rows

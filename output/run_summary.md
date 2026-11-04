@@ -1,7 +1,7 @@
-# Run summary - batch B20261104-103353-8240
+# Run summary - batch B20261104-104440-8f4e
 
 - Input: `sample_leads.csv` (15 rows)
-- Generated: 2026-11-04T10:34:04+00:00
+- Generated: 2026-11-04T10:44:51+00:00
 - Drafting engine: **OpenRouter (google/gemini-2.5-flash)**
 - Persona sources: rules=13, ai=0, default_no_ai=0
 - Fields kept from previous push (fill-blank-only): 0
@@ -40,7 +40,7 @@
 
 ## Validation failures and retries
 
-- R09 Angela Martinez: **pass_after_retry** - attempt 1 (llm): company missing or altered
+- R01 Marcus Delgado: **pass_after_retry** - attempt 1 (llm): company missing or altered
 
 ## Enrichment conflicts
 
@@ -57,23 +57,23 @@
 
 ## Drafted touches (touch 1 email)
 
-### R01 Marcus Delgado - Brightline Logistics (OUTBOUND, pass, draft_v1)
+### R01 Marcus Delgado - Brightline Logistics (OUTBOUND, pass_after_retry, draft_v1)
 
-**Subject:** JumpCloud for Brightline Logistics
+**Subject:** For Marcus at Brightline Logistics
 
-> Hi Marcus, I noticed you attended the Zero Trust webinar. As IT Director at Brightline Logistics, you're likely focused on securing your systems.
+> Marcus, I noticed you attended the Zero Trust webinar. Given your role as IT Director at Brightline Logistics, I thought you might be interested in how other transportation companies are streamlining their IT.
 >
 > JumpCloud gives IT leaders one place to manage identities, devices and access, so the team spends less time stitching tools together.
 >
 > Open to a short call next week to see if it fits your roadmap?
 
-_facts_used: first_name,company,title,source_
+_facts_used: first_name,company,title,source,industry_
 
 ### R05 David Karlsson - Vanta Corp (OUTBOUND, pass, draft_v1)
 
 **Subject:** JumpCloud for Vanta Corp
 
-> Hi David, I saw you attended the Zero Trust webinar. As an IT Manager at Vanta Corp, you're likely thinking about how to simplify your IT stack.
+> Hi David, I saw you attended the Zero Trust webinar. As an IT Manager at Vanta Corp, you're likely focused on streamlining your IT operations.
 >
 > JumpCloud gives IT leaders one place to manage identities, devices and access, so the team spends less time stitching tools together.
 >
@@ -81,35 +81,35 @@ _facts_used: first_name,company,title,source_
 
 _facts_used: first_name,company,title,source_
 
-### R09 Angela Martinez - Sunrise Dental Group (OUTBOUND, pass_after_retry, draft_v1)
+### R09 Angela Martinez - Sunrise Dental Group (OUTBOUND, pass, draft_v1)
 
-**Subject:** JumpCloud for Sunrise Dental Group
+**Subject:** For Angela at Sunrise Dental Group
 
-> Hi Angela, I saw you attended the Zero Trust webinar. Many IT Admins at healthcare companies like Sunrise Dental Group are looking for ways to simplify their IT stack.
+> Angela, I saw you attended the Zero Trust webinar. For IT Admins like you at Sunrise Dental Group, managing user access and devices can be a real challenge.
 >
 > JumpCloud lets admins handle user onboarding, device management and SSO from one console instead of juggling separate tools.
 >
 > Want me to send a quick walkthrough of the admin console?
 
-_facts_used: first_name,company,title,persona,industry,source_
+_facts_used: first_name,company,title,source_
 
 ### R13 Daniel Osei - Meridian Schools (OUTBOUND, pass, draft_v1)
 
 **Subject:** JumpCloud for Meridian Schools
 
-> Hi Daniel, I saw you attended the Zero Trust webinar. As IT Support Manager at Meridian Schools, you're likely looking for ways to streamline IT operations.
+> Hi Daniel, I saw you attended the Zero Trust webinar. Given your role as IT Support Manager at Meridian Schools, I thought you might be interested in how other education organizations are simplifying their IT.
 >
 > JumpCloud gives IT leaders one place to manage identities, devices and access, so the team spends less time stitching tools together.
 >
 > Open to a short call next week to see if it fits your roadmap?
 
-_facts_used: first_name,company,title,source_
+_facts_used: first_name,source,title,company,industry_
 
 ### R14 Rebecca Flynn - Flynn IT Partners (MSP_TRACK, pass, draft_v1)
 
-**Subject:** For Flynn IT Partners: Managing Client IT
+**Subject:** For Rebecca at Flynn IT Partners
 
-> Hi Rebecca, I hope this email finds you well. I work with MSPs like Flynn IT Partners to streamline their IT management.
+> Hi Rebecca, I hope this email finds you well. I work with MSPs like Flynn IT Partners and noticed your company's focus on IT services.
 >
 > JumpCloud's multi-tenant console lets MSPs manage identities and devices across every client from one place.
 >
