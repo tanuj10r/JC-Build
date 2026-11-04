@@ -1,0 +1,16 @@
+first_name,last_name,title,company,company_domain,email,employee_count,industry,source
+Marcus,Delgado,IT Director,Brightline Logistics,brightlinelogistics.com,mdelgado@brightlinelogistics.com,240,Transportation,Webinar - Zero Trust
+sarah,o'neil,Sr. Systems Administrator,Cedar Peak Health,cedarpeakhealth.org,soneil@cedarpeakhealth.org,90,Healthcare,Content Syndication
+Raj,,Head of IT,,,,,Technology,Trade Show
+Jennifer,Wu,Managed Services Lead,NorthStar MSP,northstarmsp.io,jen.wu@northstarmsp.io,45,MSP / IT Services,Inbound Demo Request
+David,Karlsson,IT Manager,Vanta Corp,vanta.com,dkarlsson@vanta.com,600,Software,Webinar - Zero Trust
+Priya,Raman,VP Engineering,Loopware,loopware.ai,priya@gmail.com,120,Software,Content Syndication
+,,,Acme Widgets,acmewidgets.com,info@acmewidgets.com,,Manufacturing,List Purchase
+Tom,Becker,Director of Information Technology,Cedar Peak Health,cedarpeakhealth.org,tbecker@cedarpeakhealth.org,90,Healthcare,Inbound Demo Request
+ANGELA,MARTINEZ,it admin,Sunrise Dental Group,sunrisedental.com,amartinez@sunrisedental.com,35,Healthcare,Webinar - Zero Trust
+Kevin,Liu,Chief Technology Officer,Fintrail Payments,fintrailpayments.com,kliu@fintrailpayments.com,310,Financial Services,Inbound Demo Request
+asdf,test,test,test co,test.com,test@test.com,999,,Form Fill
+Olivia,Grant,Network Administrator,Harbor Freight Group,harborfreightgroup.net,ogrant@harborfreightgroup.net,150,Retail,Content Syndication
+Daniel,Osei,IT Support Manager,Meridian Schools,meridianschools.edu,dosei@meridianschools.edu,80,Education,Webinar - Zero Trust
+Rebecca,Flynn,Owner / Principal Consultant,Flynn IT Partners,flynnitpartners.com,rebecca@flynnitpartners.com,8,MSP / IT Services,Trade Show
+Hiro,Tanaka,Senior IT Analyst,Globex Manufacturing,globexmfg.com,h.tanaka@globexmfg.com,1200,Manufacturing,Inbound Demo Request

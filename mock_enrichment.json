@@ -1,0 +1,10 @@
+{
+  "_note": "MOCK enrichment data, hand-written for this demo. Keyed by company DOMAIN only. Not from any paid provider.",
+  "brightlinelogistics.com": {"employee_count": 240, "industry": "Transportation", "hq_country": "US", "confidence": 0.9},
+  "cedarpeakhealth.org":     {"employee_count": 95,  "industry": "Healthcare", "hq_country": "US", "confidence": 0.85},
+  "northstarmsp.io":         {"employee_count": 45,  "industry": "MSP / IT Services", "hq_country": "US", "confidence": 0.8},
+  "vanta.com":               {"employee_count": 600, "industry": "Software", "hq_country": "US", "confidence": 0.7},
+  "fintrailpayments.com":    {"employee_count": 300, "industry": "Financial Services", "hq_country": "US", "confidence": 0.9},
+  "harborfreightgroup.net":  {"employee_count": 2400, "industry": "Retail", "hq_country": "US", "confidence": 0.75},
+  "meridianschools.edu":     {"employee_count": 80,  "industry": "Education", "hq_country": "US", "confidence": 0.5}
+}

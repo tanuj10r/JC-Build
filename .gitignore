@@ -1,0 +1,12 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local tooling and OS files
+.claude/
+.DS_Store
+
+# Secrets (keys come from environment variables, never from files)
+.env

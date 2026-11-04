@@ -1,0 +1,10 @@
+{
+  "_note": "MOCK CRM. Stands in for a Salesforce lookup keyed by company domain. The single record below is FAKE and illustrative; its domain is not in the sample data.",
+  "contoso-example.com": {
+    "account_owner": "Jane Rep (fake)",
+    "open_opportunity": true,
+    "customer_status": "customer",
+    "partner_status": "none",
+    "opted_out_emails": ["alex@contoso-example.com"]
+  }
+}
