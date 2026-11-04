@@ -10,13 +10,14 @@
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-export OPENROUTER_API_KEY=...                 # optional; without it, drafts use the template fallback
-export OPENROUTER_MODEL=google/gemini-2.5-flash # optional; puts this model first in the list
+export OPENROUTER_API_KEY=...                # optional; without it, drafts use the template fallback
 
 python pipeline.py sample_leads.csv          # merge into existing output (fill-blank-only)
 python pipeline.py sample_leads.csv --fresh  # delete leads_output.csv + audit_log.jsonl and rebuild
 pytest                                       # offline tests, no network
 ```
+
+The sample came as `gtm-ai-ops-assessment-sample-data.xlsx` (untouched) and was converted to `sample_leads.csv`.
 
 ### Self-serve UI (Streamlit)
 
@@ -24,19 +25,9 @@ pytest                                       # offline tests, no network
 streamlit run app.py
 ```
 
-This opens a browser page. In the sidebar, a marketing ops user makes two choices and clicks **Run pipeline**:
-1. **Leads to run:** "Sample leads (15 rows)" or "Upload my own CSV". The upload box only appears for the second option, and Run stays disabled until a file is chosen.
-2. **Previous results:** "Clear previous results first" (default) rebuilds the outputs from scratch. Untick it to add to the last run, where existing values are never overwritten and only blank fields are filled.
+A self-serve page for marketing ops: pick the sample leads or upload a CSV, click **Run pipeline**, and see counts per lane, a filterable and highlighted leads table, the touch-1 drafts and download buttons. The workflow diagram (`assets/workflow_design.png`, from the [Whimsical board](https://whimsical.com/KuLbj7DSxCxpkCUAUsVYMk)) is shown alongside.
 
-Before a run, the main area shows the workflow design diagram (`assets/workflow_design.png`, a snapshot of the [Whimsical board](https://whimsical.com/KuLbj7DSxCxpkCUAUsVYMk)), so users can see every step. After a run, the page has a **Results** tab and a **Workflow design** tab. Results shows:
-- counts per lane
-- a filterable leads table (lane, reason_code, total_score, validation_status), with HELD, HUMAN_REVIEW, enrichment-conflict and template_fallback rows highlighted
-- expandable touch-1 drafts for OUTBOUND and MSP_TRACK rows
-- download buttons for `leads_output.csv` and `run_summary.md`
-
-`app.py` is UI only and calls `pipeline.run()`, so the CLI and the UI give identical results and write to the same `output/` folder. The OpenRouter key is read from `OPENROUTER_API_KEY` in the environment. The UI never asks for it or displays it; it only says whether a key was found.
-
-The sample data came as `gtm-ai-ops-assessment-sample-data.xlsx` (left untouched). It was converted to `sample_leads.csv`, which is the input the pipeline reads.
+`app.py` is UI only: it calls `pipeline.run()`, so the CLI and UI give identical results. The API key is read from the environment and never shown.
 
 ## The 10 steps
 
@@ -66,7 +57,7 @@ The sample data came as `gtm-ai-ops-assessment-sample-data.xlsx` (left untouched
 
 1. Gate EXCLUDE, duplicate email, or CRM opt-out → **EXCLUDE**
 2. Gate HUMAN_REVIEW → **HUMAN_REVIEW** (`HYGIENE_*`)
-3. Inbound Demo Request → **ROUTE_TO_REP**. Score only sets priority (P1 at 80 or above, otherwise P2). The reason code gets `_MSP`, `_ABOVE_ICP` or `_ENRICHMENT_CONFLICT` suffixes. *Because this check comes early, an inbound demo outranks the MSP and >1,000-employee rules below.*
+3. Inbound Demo Request → **ROUTE_TO_REP**. Score only sets priority (P1 at 80 or above, otherwise P2). The reason code gets `_MSP`, `_ABOVE_ICP` or `_ENRICHMENT_CONFLICT` suffixes.
 4. Existing CRM owner, customer or partner → **HUMAN_REVIEW**
 5. Enrichment conflict → **HUMAN_REVIEW**
 6. More than 1,000 employees → **HUMAN_REVIEW** (`ABOVE_ICP_BAND`)
@@ -80,10 +71,10 @@ After routing: if an account's primary contact went **ROUTE_TO_REP**, its other 
 
 | File | Contents |
 |---|---|
-| `leads_output.csv` | One row per lead: original columns, `clean_*` columns, flags, persona, CRM, enrichment, scores, lane, reason, priority, draft, validation status and prompt version. |
-| `audit_log.jsonl` | One JSON line per record per step: batch_id, record_id, step, decision, reason, prompt_version and timestamp. That makes 10 lines per record. It is append-only across runs (`--fresh` deletes it first). |
-| `run_summary.md` | Human-readable report: counts per lane, every lead with its lane and reason, validation issues, enrichment conflicts, excluded/held/review rows, and the drafted emails. |
-| `raw_input_<batch_id>.csv` | Untouched copy of each input file, one per run. |
+| `leads_output.csv` | One row per lead: original + cleaned fields, persona, scores, lane, reason, draft, validation status |
+| `audit_log.jsonl` | One line per record per step (10 per record), append-only across runs |
+| `run_summary.md` | Lane counts, every lead's lane and reason, conflicts, validation issues and drafts |
+| `raw_input_<batch_id>.csv` | Untouched copy of each input |
 
 ## Results on the sample (15 rows)
 
@@ -117,7 +108,6 @@ Totals: ROUTE_TO_REP 4, OUTBOUND 4, MSP_TRACK 1, HUMAN_REVIEW 3, HELD 1, EXCLUDE
 - Employee counts that differ by more than **25%** are treated as an enrichment conflict, and the CSV value is kept.
 - Enrichment with confidence **below 0.6** is ignored (e.g. Meridian Schools at 0.5).
 - **Fill-blank-only merge:** the previous `leads_output.csv` is treated as the existing CRM state, so a rerun never overwrites a non-empty value, even after a rule change. Use `--fresh` to rebuild.
-- `audit_log.jsonl` is append-only across runs; `batch_id` tells the runs apart.
 
 ## Known limitations
 
@@ -126,7 +116,4 @@ Totals: ROUTE_TO_REP 4, OUTBOUND 4, MSP_TRACK 1, HUMAN_REVIEW 3, HELD 1, EXCLUDE
 - Persona rules are English-keyword regexes.
 - The numbers ban also blocks legitimate digits outside first name and company (e.g. a title like "Tier 2 Support").
 - Dedupe matches exact email only; there is no fuzzy matching on name or company.
-- LLM calls go through OpenRouter (`requests`, no vendor SDK). The model list is in `config.LLM_MODELS`: `google/gemini-2.5-flash` first, with OpenRouter falling back to the next model automatically if one is down. JSON output is enforced with a strict JSON schema, and only providers that support it are used.
-- We moved from the free Gemini API to OpenRouter because the free tier allowed only 20 requests per model per day and some models were overloaded (503) or retired (404).
-- Rate limits and server errors get a short backoff (Retry-After if given, capped at 30s). A rejected key or no credits (401/402) switches the rest of the run to the template fallback instead of retrying.
-- The retry-after-validation path and AI persona fallback are covered by unit tests with a fake client; on the sample data, every title matches a rule, so the persona fallback is never called.
+- LLM: Gemini 2.5 Flash via OpenRouter, strict JSON schema, safe template fallback.
